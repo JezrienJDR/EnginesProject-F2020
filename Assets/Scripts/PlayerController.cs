@@ -13,9 +13,33 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float speed = 1;
 
+    public Animator animr;
+
+    public void SavePosition()
+    {
+        PlayerPrefs.SetFloat("xPos", transform.position.x);
+        PlayerPrefs.SetFloat("yPos", transform.position.y);
+        PlayerPrefs.SetFloat("zPos", transform.position.z);
+    }
+
+    public void LoadPosition()
+    {
+        float x = PlayerPrefs.GetFloat("xPos");
+        float y = PlayerPrefs.GetFloat("yPos");
+        float z = PlayerPrefs.GetFloat("zPos");
+
+        Vector3 loadedPosition = new Vector3(x, y, z);
+
+        transform.position = loadedPosition;
+    }
+
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+
+        animr = GetComponent<Animator>();
+
+        LoadPosition();
     }
 
     // Update is called once per frame
@@ -24,11 +48,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey("up") | Input.GetKey("w"))
         {
             direction = 'U';
+
+            animr.SetInteger("moveState", 2);
+
         }
 
         else if (Input.GetKey("down") | Input.GetKey("s"))
         {
             direction = 'D';
+
+
+            animr.SetInteger("moveState", 3);
         }
 
         else if (Input.GetKey("left") | Input.GetKey("a"))
@@ -36,17 +66,28 @@ public class PlayerController : MonoBehaviour
             direction = 'L';
 
             sr.flipX = false;
+
+
+            animr.SetInteger("moveState", 1);
+
         }
 
         else if (Input.GetKey("right") | Input.GetKey("d"))
         {
             direction = 'R';
             sr.flipX = true;
-        }
 
+
+            animr.SetInteger("moveState", 1);
+
+
+        }
         else
         {
             direction = 'N';
+
+
+            animr.SetInteger("moveState", 0);
         }
 
         float moveSpeed = speed * Time.deltaTime;
