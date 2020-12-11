@@ -41,7 +41,7 @@ public class BattleRandomizer : MonoBehaviour
 
                 if (roll <= odds)
                 {
-                    SceneManager.LoadScene("BattleScene");
+                    SceneTransitions.Instance.StartBattle();
                 }
             }
         }

@@ -24,13 +24,18 @@ public class PlayerController : MonoBehaviour
 
     public void LoadPosition()
     {
-        float x = PlayerPrefs.GetFloat("xPos");
-        float y = PlayerPrefs.GetFloat("yPos");
-        float z = PlayerPrefs.GetFloat("zPos");
-
-        Vector3 loadedPosition = new Vector3(x, y, z);
-
-        transform.position = loadedPosition;
+        if (PlayerPrefs.HasKey("xPos") && PlayerPrefs.HasKey("yPos") && PlayerPrefs.HasKey("zPos"))
+        {
+            float x = PlayerPrefs.GetFloat("xPos");
+            float y = PlayerPrefs.GetFloat("yPos");
+            float z = PlayerPrefs.GetFloat("zPos");
+            Vector3 loadedPosition = new Vector3(x, y, z);
+            transform.position = loadedPosition;
+        }
+        else
+        {
+            transform.position = new Vector3(-2.54f, -0.9f);
+        }
     }
 
     void Start()
