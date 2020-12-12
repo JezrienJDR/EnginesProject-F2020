@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    char direction = 'L';
+    public char direction = 'L';
 
     SpriteRenderer sr;
 
@@ -17,26 +17,11 @@ public class PlayerController : MonoBehaviour
 
     public void SavePosition()
     {
-        PlayerPrefs.SetFloat("xPos", transform.position.x);
-        PlayerPrefs.SetFloat("yPos", transform.position.y);
-        PlayerPrefs.SetFloat("zPos", transform.position.z);
+        PlayerPrefs.SetFloat("SavedX", transform.position.x);
+        PlayerPrefs.SetFloat("SavedY", transform.position.y);
+        PlayerPrefs.SetFloat("SavedZ", transform.position.z);
     }
 
-    public void LoadPosition()
-    {
-        if (PlayerPrefs.HasKey("xPos") && PlayerPrefs.HasKey("yPos") && PlayerPrefs.HasKey("zPos"))
-        {
-            float x = PlayerPrefs.GetFloat("xPos");
-            float y = PlayerPrefs.GetFloat("yPos");
-            float z = PlayerPrefs.GetFloat("zPos");
-            Vector3 loadedPosition = new Vector3(x, y, z);
-            transform.position = loadedPosition;
-        }
-        else
-        {
-            transform.position = new Vector3(-2.54f, -0.9f);
-        }
-    }
 
     void Start()
     {
@@ -44,7 +29,29 @@ public class PlayerController : MonoBehaviour
 
         animr = GetComponent<Animator>();
 
-        LoadPosition();
+        int lastOrSaved = PlayerPrefs.GetInt("LastOrSaved");
+
+        if (lastOrSaved == 0)
+        {
+            float x = PlayerPrefs.GetFloat("LastX");
+            float y = PlayerPrefs.GetFloat("LastY");
+            float z = PlayerPrefs.GetFloat("LastZ");
+
+            Vector3 loadedPosition = new Vector3(x, y, z);
+
+            transform.position = loadedPosition;
+        }
+        else if(lastOrSaved == 1)
+        {
+            float x = PlayerPrefs.GetFloat("SavedX");
+            float y = PlayerPrefs.GetFloat("SavedY");
+            float z = PlayerPrefs.GetFloat("SavedZ");
+
+            Vector3 loadedPosition = new Vector3(x, y, z);
+
+            transform.position = loadedPosition;
+        }
+
     }
 
     // Update is called once per frame

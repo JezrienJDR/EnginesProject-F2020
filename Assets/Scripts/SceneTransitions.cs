@@ -18,20 +18,48 @@ public class SceneTransitions : MonoBehaviour
     float t_time = 0.9f;
     
     public static SceneTransitions Instance { get { return instance; } }
-    
-    IEnumerator SwitchScene(int scene_index)
+
+    public void ResetLevel()
+    {
+        PlayerPrefs.SetInt("PlayerLevel", 0);
+        PlayerPrefs.SetInt("Move1", 1);
+        PlayerPrefs.SetInt("Move2", 2);
+        PlayerPrefs.SetInt("Move3", 0);
+        PlayerPrefs.SetInt("Move4", 0);
+
+        PlayerPrefs.SetInt("LastOrSaved", 3);
+    }
+
+    IEnumerator SwitchScene(string sceneName)
     {
         anim.SetTrigger("start");
         yield return new WaitForSeconds(t_time);
-        SceneManager.LoadScene(scene_index);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void PlayGame()
     {
-        StartCoroutine(SwitchScene(1));
+        if(PlayerPrefs.GetInt("ExistingData") != 1)
+        {
+            NewGame();
+            return;
+        }
+        StartCoroutine(SwitchScene("OverWorld"));
         music.clip = overworld_theme;
         music.Play();
     }
+
+    public void NewGame()
+    {
+        PlayerPrefs.SetInt("ExistingData", 1);
+
+        ResetLevel();
+
+        StartCoroutine(SwitchScene("OverWorld"));
+        music.clip = overworld_theme;
+        music.Play();
+    }
+
 
     public void QuitGame()
     {
@@ -40,28 +68,28 @@ public class SceneTransitions : MonoBehaviour
 
     public void StartBattle()
     {
-        StartCoroutine(SwitchScene(2));
+        StartCoroutine(SwitchScene("BattleScene"));
         music.clip = battle_theme;
         music.Play();
     }
 
     public void WinBattle()
     {
-        StartCoroutine(SwitchScene(3));
+        StartCoroutine(SwitchScene("BattleWin"));
         music.clip = battle_win_theme;
         music.Play();
     }
 
     public void EndBattle()
     {
-        StartCoroutine(SwitchScene(1));
+        StartCoroutine(SwitchScene("OverWorld"));
         music.clip = overworld_theme;
         music.Play();
     }
 
     public void LoseBattle()
     {
-        StartCoroutine(SwitchScene(4));
+        StartCoroutine(SwitchScene("GameOver"));
         music.clip = game_over_theme;
         music.Play();
     }

@@ -14,23 +14,26 @@ public class HealthBar : MonoBehaviour
     float barWidth;
     public RectTransform.Edge edge;
 
+    public ICharacter character;
+
     // Start is called before the first frame update
     void Start()
     {
         bar = GetComponent<Image>();
         if (bar != null)
         {
-            Debug.Log("IT'S WORKIIIIIING");
+            //Debug.Log("IT'S WORKIIIIIING");
 
             barWidth = bar.rectTransform.sizeDelta.x;
 
         }
 
+        character.onHealthChange.AddListener(StartChange);
     }
 
     public void ChangeHealth(int delta)
     {
-        Debug.Log("Applying Damage");
+        //Debug.Log("Applying Damage");
         hp += delta;
         //bar.rectTransform.localScale = new Vector2(hp / 100.0f * barSize.x, barSize.y);
         bar.rectTransform.SetInsetAndSizeFromParentEdge(edge, 0, hp / 100.0f * barWidth);

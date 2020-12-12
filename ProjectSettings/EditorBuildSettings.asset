@@ -5,10 +5,25 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/BattleScene.unity
     guid: c06a8752cb4e0e548919598624d345f9
+  - enabled: 1
+    path: Assets/Scenes/OverWorld.unity
+    guid: 432ddcd01a0684748b36b591a9e44459
+  - enabled: 1
+    path: Assets/Scenes/BattleWin.unity
+    guid: d42dce54547237d4fa737d476903e3d6
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 276f522e63db2d84bb115ab67f008410
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: baa9adcedc96ad0488380a24528267ef
+  - enabled: 1
+    path: Assets/Scenes/TitleScene.unity
+    guid: 21fdc44a436c33d4e95177f2c8043681
   m_configObjects: {}

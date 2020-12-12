@@ -27,21 +27,30 @@ public class BattleRandomizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
+        
 
-        if (playerPos == area.ClosestPoint(player.transform.position))
+        if (player.GetComponent<PlayerController>().direction != 'N')
         {
-            timeElapsed += Time.deltaTime;
+            Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
 
-            if (timeElapsed >= checkTime)
+            if (playerPos == area.ClosestPoint(player.transform.position))
             {
-                timeElapsed = 0;
+                timeElapsed += Time.deltaTime;
 
-                float roll = Random.Range(0.0f, 100.0f);
-
-                if (roll <= odds)
+                if (timeElapsed >= checkTime)
                 {
-                    SceneTransitions.Instance.StartBattle();
+                    timeElapsed = 0;
+
+                    float roll = Random.Range(0.0f, 100.0f);
+
+                    if (roll <= odds)
+                    {
+                        PlayerPrefs.SetFloat("LastX", player.transform.position.x);
+                        PlayerPrefs.SetFloat("LastY", player.transform.position.y);
+                        PlayerPrefs.SetFloat("LastZ", player.transform.position.z);
+
+                        SceneTransitions.Instance.StartBattle();
+                    }
                 }
             }
         }
